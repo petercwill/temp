@@ -22,6 +22,7 @@ def read_file(file_location):
 
 def create_val_set(train, output_size):
     val = []
+    train = list(train)
     for i in range(len(train)):
         val.append(train[i][-output_size:])
         train[i] = train[i][:-output_size]

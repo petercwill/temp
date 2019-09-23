@@ -13,9 +13,9 @@ def get_config(interval):
         'rnn_cell_type': 'LSTM',
         'learning_rate': 1e-3,
         'learning_rates': ((10, 1e-4)),
-        'num_of_train_epochs': 15,
-        'num_of_categories': 6,  # in data provided
-        'batch_size': 1024,
+        'num_of_train_epochs': 20,
+        'num_of_categories': 2,  # in data provided
+        'batch_size': 16,
         'gradient_clipping': 20,
         'c_state_penalty': 0,
         'min_learning_rate': 0.0001,
@@ -30,7 +30,7 @@ def get_config(interval):
 
     if interval == 'Quarterly':
         config.update({
-            'chop_val': 72,
+            'chop_val': 60,
             'variable': "Quarterly",
             'dilations': ((1, 2), (4, 8)),
             'state_hsize': 40,

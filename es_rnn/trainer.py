@@ -46,6 +46,17 @@ class ESRNNTrainer(nn.Module):
             with open(file_path, 'a') as f:
                 f.write(','.join([str(e), str(epoch_loss), str(epoch_val_loss)]) + '\n')
         print('Total Training Mins: %5.2f' % ((time.time()-start_time)/60))
+        self.model.eval()
+        with torch.no_grad():
+            acts = []
+            preds = []
+            info_cats = []
+
+            hold_out_loss = 0
+            for batch_num, (train, val, test, info_cat, idx) in enumerate(self.dl):
+                a, b, (hold_out_pred, network_output_non_train), (hold_out_act, hold_out_act_deseas_norm), _ = self.model(train, val, test, info_cat, idx)
+                df = pd.DataFrame(hold_out_pred.cpu().detach().numpy())
+                df.to_csv('/home/peter/forecasts/ESRNN-GPU/cadre_data/preds/preds.csv')
 
     def train(self):
         self.model.train()
